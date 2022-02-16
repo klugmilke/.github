@@ -10,7 +10,7 @@ on:
         type: string
     outputs:
       image:
-        value: 'knm-io/wiki-${{ inputs.name }}'
+        value: ${{ env.IMAGE_NAME }}
 
 
 env:
