@@ -8,6 +8,10 @@ on:
       name:
         required: true
         type: string
+    outputs:
+      imagename:
+        value: 'knm-io/wiki-${{ inputs.name }}'
+
 
 env:
   IMAGE_NAME: 'knm-io/wiki-${{ inputs.name }}'
