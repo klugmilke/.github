@@ -1,0 +1,34 @@
+name: Build Wiki Container
+on:
+  workflow_call:
+    inputs:
+      path:
+        required: true
+        type: string
+      name:
+        required: true
+        type: string
+
+env:
+  IMAGE_NAME: 'knm-io/wiki-${{ inputs.name }}'
+
+
+jobs:
+  build:
+    runs-on:
+      - self-hosted
+      - docker-knm-dev1
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Wiki Container
+        working-directory: ${{ inputs.path }}
+        run: |
+          docker build --pull --tag $IMAGE_NAME:latest --tag $IMAGE_NAME:b$GITHUB_RUN_ID -f- . <<EOF
+            FROM registry.knm.io:5000/knm-io/wiki-builder:latest AS builder
+            RUN mkdir /output
+            ADD . /data
+            RUN sh -e /builder/run.sh
+
+            FROM nginx
+            COPY --from=builder /output /usr/share/nginx/html/${{ inputs.name }}
+          EOF
