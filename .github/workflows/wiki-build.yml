@@ -10,7 +10,7 @@ on:
         type: string
     outputs:
       image:
-        value: ${{ env.IMAGE_NAME }}
+        value: ${{ jobs.build.outputs.image }}
 
 
 env:
@@ -22,9 +22,12 @@ jobs:
     runs-on:
       - self-hosted
       - docker-knm-dev1
+    outputs:
+      image: ${{ steps.build.outputs.iamge }}
     steps:
       - uses: actions/checkout@v2
       - name: Build Wiki Container
+        id: build
         working-directory: ${{ inputs.path }}
         run: |
           docker build --pull --tag $IMAGE_NAME:latest --tag $IMAGE_NAME:b$GITHUB_RUN_ID -f- . <<EOF
@@ -36,3 +39,4 @@ jobs:
             FROM nginx
             COPY --from=builder /output /usr/share/nginx/html/${{ inputs.name }}
           EOF
+          echo "::set-output name=image::$IMAGE_NAME"
