@@ -1,0 +1,23 @@
+name: Deploy Wiki
+on:
+  push:
+    branches:
+      - [ $default-branch ]
+    paths:
+      - 'assets/docs/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: klugmilke/.github/.github/workflows/wiki-build.yml@main
+    with:
+      name: 'wiki-name'
+      path: 'assets/docs'
+  deploy:
+    needs: build
+    uses: klugmilke/.github/.github/workflows/wiki-deploy.yml@main
+    with:
+      name: 'wiki-name'
+      image: ${{ needs.build.outputs.image }}
+    secrets:
+      users: ${{ secrets.wiki_user }}

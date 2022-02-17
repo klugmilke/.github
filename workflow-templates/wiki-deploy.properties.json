@@ -1,0 +1,7 @@
+{
+  "name": "KNM Wiki Deployment",
+  "description": "Allows you to create an wiki page on wiki.knm.io",
+  "categories": [
+      "Markdown"
+  ]
+}
