@@ -20,7 +20,7 @@ jobs:
       - self-hosted
       - docker-knm-dev1
     env:
-      OLD_CONTAINER_NAME: wiki-{{ inputs.name }}-${{ github.run_number }}
+      OLD_CONTAINER_NAME: wiki-${{ inputs.name }}-${{ github.run_number }}
     steps:
       - run: docker stop $CONTAINER_NAME
         id: container_stop
