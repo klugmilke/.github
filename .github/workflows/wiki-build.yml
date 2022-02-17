@@ -1,4 +1,4 @@
-name: Build Wiki Container
+name: Build Wiki Image
 on:
   workflow_call:
     inputs:
