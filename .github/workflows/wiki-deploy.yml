@@ -25,12 +25,12 @@ jobs:
       - run: docker stop $CONTAINER_NAME
         id: container_stop
         continue-on-error: true
-      - run: docker rename wiki-knm-alm $OLD_CONTAINER_NAME
+      - run: docker rename $CONTAINER_NAME $OLD_CONTAINER_NAME
         if: ${{ steps.container_stop.outcome == 'success' }}
       - name: Start Container
         run: >
           docker run
-          --name wiki-knm-alm
+          --name $CONTAINER_NAME
           --detach
           --network=traefik
           --label 'traefik.enable=true'
