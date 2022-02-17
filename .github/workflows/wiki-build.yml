@@ -16,14 +16,13 @@ on:
 env:
   IMAGE_NAME: 'knm-io/wiki-${{ inputs.name }}'
 
-
 jobs:
   build:
     runs-on:
       - self-hosted
       - docker-knm-dev1
     outputs:
-      image: ${{ steps.build.outputs.iamge }}
+      image: ${{ steps.build.outputs.image }}
     steps:
       - uses: actions/checkout@v2
       - name: Build Wiki Container
